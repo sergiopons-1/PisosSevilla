@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+    <h1>Inmobiliarias</h1>
+{% endblock %}
+
+{% block contenido %}
+<h2>Número total de inmobiliarias: {{ num_inmobiliarias }}</h2>
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in inmobiliarias %}
+            <tr>
+                <td>{{ row.nombre }}</td>
+                <td>
+                    <a href="{{ row.link }}">
+                        {{ "Ver inmobiliaria"|default:"No hay información al respecto" }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

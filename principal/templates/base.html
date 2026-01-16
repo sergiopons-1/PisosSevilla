@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang='es'>
+	
+<head>
+  <meta charset='utf-8'>
+  
+  <style>
+    nav { display:flex; gap:2rem; margin-top:1rem; margin-bottom:1rem; }
+    .menu { padding:1rem; border:1px solid #ddd; border-radius:8px; background:#f7f7f7; }
+    .menu h3 { margin-top:0; }
+    .menu ul { list-style:none; padding:0; margin:0; }
+    .menu li { margin:0.35rem 0; }
+    .menu a { text-decoration:none; color:#1a73e8; }
+    .menu a:hover { text-decoration:underline; }
+    .brand { display:flex; align-items:center; gap:0.75rem; margin-top:0.75rem; }
+    .brand .autor { font-weight:600; color:#333; }
+    .brand .logo-proyecto { height:48px; }
+  </style>
+</head>
+<body>
+  <header> 
+    <!-- Franja superior con autoría y logo -->
+    <div class="brand">
+      <span class="autor">Proyecto realizado por Sergio Pons López.</span>
+	  <b>El trabajo se ha realizado sobre la web</b>
+	  <a href="https://www.pisos.com/venta/pisos-sevilla_capital/" target="_blank" rel="noopener">
+        <img class="logo-proyecto" src="{% static 'img/logopisos.png' %}" alt="Logo del proyecto">
+      </a>
+    </div>
+  	{% block encabezado %}{% endblock %}
+  	<nav>
+      <div class="menu">
+        <h3>Beautiful soup</h3>
+        <ul>
+          <li><a href='/'>Inicio</a></li>
+          <li><a href='/carga'>Cargar la Base de Datos</a></li>
+          <li><a href='/inmuebles'>Mostrar todos los inmuebles</a></li>
+          <li><a href='/inmobiliarias'>Mostrar todas las inmobiliarias</a></li>
+          <li><a href='/buscarrangodeprecios'>Buscar por rango de precios</a></li>
+          <li><a href='/buscarporhabitaciones'>Buscar por Habitaciones</a></li>
+          <li><a href='/anunciosdehoy'>Anuncios actualizados hoy</a></li>
+        </ul>
+      </div>
+      <div class="menu">
+        <h3>Whoosh</h3>
+        <ul>
+          <li><a href='/carga_whoosh'>Cargar la Base de Datos con Whoosh</a></li>
+          <li><a href='/inmuebles_whoosh'>Mostrar todos los inmuebles (Whoosh)</a></li>
+          <li><a href='/buscar_por_titulo_whoosh'>Buscar por Título o Ubicación (Whoosh)</a></li>
+          <li><a href='/buscar_fecha_whoosh'>Buscar por Fecha (Whoosh)</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <section>
+    {% block contenido %}{% endblock %}
+  </section>
+  {% block pie %}{% endblock %} 
+</body>
+</html>

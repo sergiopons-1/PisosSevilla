@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+    <h1>Inmuebles</h1>
+{% endblock %}
+
+{% block contenido %}
+    <h2>Número total de inmuebles: {{ num_inmuebles }}</h2>
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Referencia</th>
+                <th>Título</th>
+                <th>Habitaciones</th>
+                <th>Baños</th>
+                <th>Precio (€)</th>
+                <th>Planta</th>
+                <th>Ubicación</th>
+                <th>Antigüedad</th>
+                <th>Inmobiliaria</th>
+                <th>Fecha de actualización</th>
+                <th>Enlace</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in inmuebles %}
+            <tr>
+                <td>{{ row.referencia }}</td>
+                <td>{{ row.titulo }}</td>
+                <td>{{ row.habitaciones|default:"No hay información al respecto" }}</td>
+                <td>{{ row.banos|default:"No hay información al respecto" }}</td>
+                <td>{{ row.precio }}</td>
+                <td>{{ row.planta }}</td>
+                <td>{{ row.ubicacion }}</td>
+                <td>{{ row.antiguedad }}</td>
+                <td>
+                    <a href="{{ row.inmobiliaria.link }}">
+                        {{ row.inmobiliaria.nombre|default:"No hay información al respecto" }}
+                    </a>
+                </td>
+                <td>{{ row.fecha_actualizacion|date:"d/m/Y" }}</td>
+                <td>
+                    <a href="{{ row.url }}" target="_blank">
+                        Ver anuncio
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

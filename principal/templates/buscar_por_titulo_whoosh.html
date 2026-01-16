@@ -1,0 +1,77 @@
+
+{% extends "base.html" %}
+{% block encabezado %}
+    <h1>Buscar por Título o Ubicación (Whoosh)</h1>
+{% endblock %}
+{% block contenido %}
+<div class="container mt-4">
+
+    
+    <form method="get" class="mt-4">
+        <div class="form-group">
+            <label for="frase">Introduce una frase o palabra para buscar:</label>
+            <input type="text" class="form-control" id="frase" name="frase" value="{{ frase }}" placeholder="Ej: Triana, ático...">
+        <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+        </div>
+
+    </form>
+
+    {% if mensaje %}
+        <div class="alert alert-info mt-4">
+            {{ mensaje }}
+        </div>
+    {% endif %}
+
+    {% if mostrar_resultados %}
+        <div class="mt-4">
+            <h2>Número total de inmuebles encontrados: {{ inmuebles|length }}</h2>
+            {% if inmuebles %}
+                <table border="1" cellpadding="6" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Referencia</th>
+                            <th>Título</th>
+                            <th>Habitaciones</th>
+                            <th>Baños</th>
+                            <th>Precio (€)</th>
+                            <th>Planta</th>
+                            <th>Ubicación</th>
+                            <th>Antigüedad</th>
+                            <th>Inmobiliaria</th>
+                            <th>Fecha de actualización</th>
+                            <th>Enlace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inmueble in inmuebles %}
+                        <tr>
+                            <td>{{ inmueble.referencia }}</td>
+                            <td>{{ inmueble.titulo }}</td>
+                            <td>{{ inmueble.habitaciones|default:"No hay información al respecto" }}</td>
+                            <td>{{ inmueble.banos|default:"No hay información al respecto" }}</td>
+                            <td>{{ inmueble.precio }}</td>
+                            <td>{{ inmueble.planta }}</td>
+                            <td>{{ inmueble.ubicacion }}</td>
+                            <td>{{ inmueble.antiguedad }}</td>
+                            <td>
+                                <a href="{{ inmueble.link_inmobiliaria }}">
+                                    {{ inmueble.inmobiliaria|default:"No hay información al respecto" }}
+                                </a>
+                            </td>
+                            <td>{{ inmueble.fecha|date:"d/m/Y" }}</td>
+                            <td>
+                                <a href="{{ inmueble.url }}" target="_blank">
+                                    Ver anuncio
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No se encontraron inmuebles con esa búsqueda.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

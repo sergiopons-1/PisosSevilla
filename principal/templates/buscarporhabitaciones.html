@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+    <h1>Buscar Inmuebles por Número de Habitaciones</h1>
+{% endblock %}
+
+{% block contenido %}
+    <form method="GET" action="{% url 'buscarporhabitaciones' %}">
+        <label for="habitaciones">Número de Habitaciones:</label>
+        
+        <select id="habitaciones" name="habitaciones" required>
+            <option value="">-- Selecciona una opción --</option>
+            {% for valor, etiqueta in opciones_habitaciones %}
+                <option value="{% if valor is None %}none{% else %}{{ valor }}{% endif %}" 
+                        {% if habitaciones == valor|stringformat:"s" or habitaciones == "none" and valor is None %}selected{% endif %}>
+                    {{ etiqueta }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if mostrar_resultados %}
+        {% if inmuebles %}
+            <h2>Resultados: {{ inmuebles|length }} inmueble(s) encontrado(s)</h2>
+            
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Referencia</th>
+                <th>Título</th>
+                <th>Habitaciones</th>
+                <th>Baños</th>
+                <th>Precio (€)</th>
+                <th>Planta</th>
+                <th>Ubicación</th>
+                <th>Antigüedad</th>
+                <th>Inmobiliaria</th>
+                <th>Fecha de actualización</th>
+                <th>Enlace</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in inmuebles %}
+            <tr>
+                <td>{{ row.referencia }}</td>
+                <td>{{ row.titulo }}</td>
+                <td>{{ row.habitaciones|default:"No hay información al respecto" }}</td>
+                <td>{{ row.banos|default:"No hay información al respecto" }}</td>
+                <td>{{ row.precio }}</td>
+                <td>{{ row.planta }}</td>
+                <td>{{ row.ubicacion }}</td>
+                <td>{{ row.antiguedad }}</td>
+                <td>
+                    <a href="{{ row.inmobiliaria.link }}">
+                        {{ row.inmobiliaria.nombre|default:"No hay información al respecto" }}
+                    </a>
+                </td>
+                <td>{{ row.fecha_actualizacion|date:"d/m/Y" }}</td>
+                <td>
+                    <a href="{{ row.url }}" target="_blank">
+                        Ver anuncio
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+        {% else %}
+            <p>No se encontraron inmuebles con {{ habitaciones }} habitación(es).</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

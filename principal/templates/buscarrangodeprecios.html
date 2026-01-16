@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block encabezado %}
+    <h1>Buscar Inmuebles por Rango de precios</h1>
+{% endblock %}
+
+{% block contenido %}
+    <form method="GET" action="{% url 'buscarrangodeprecios' %}">
+        <label for="precio_min">Precio Mínimo (€):</label>
+        <input type="number" 
+               id="precio_min" 
+               name="precio_min" 
+               min="0"
+               value="{{ precio_min }}"
+               placeholder="Introduce el precio mínimo"
+               required>
+
+        <label for="precio_max">Precio Máximo (€):</label>
+        <input type="number" 
+               id="precio_max" 
+               name="precio_max" 
+               min="0"
+               value="{{ precio_max }}"
+               placeholder="Introduce el precio máximo"
+               required>
+
+        <button type="submit">Buscar</button>
+    </form>
+    {% if mostrar_resultados %}
+        {% if inmuebles %}
+            <h2>Resultados: {{ inmuebles|length }} inmueble(s) encontrado(s)</h2>
+            
+    <table border="1" cellpadding="6" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Referencia</th>
+                <th>Título</th>
+                <th>Habitaciones</th>
+                <th>Baños</th>
+                <th>Precio (€)</th>
+                <th>Planta</th>
+                <th>Ubicación</th>
+                <th>Antigüedad</th>
+                <th>Inmobiliaria</th>
+                <th>Fecha de actualización</th>
+                <th>Enlace</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in inmuebles %}
+            <tr>
+                <td>{{ row.referencia }}</td>
+                <td>{{ row.titulo }}</td>
+                <td>{{ row.habitaciones|default:"No hay información al respecto" }}</td>
+                <td>{{ row.banos|default:"No hay información al respecto" }}</td>
+                <td>{{ row.precio }}</td>
+                <td>{{ row.planta }}</td>
+                <td>{{ row.ubicacion }}</td>
+                <td>{{ row.antiguedad }}</td>
+                <td>
+                    <a href="{{ row.inmobiliaria.link }}">
+                        {{ row.inmobiliaria.nombre|default:"No hay información al respecto" }}
+                    </a>
+                </td>
+                <td>{{ row.fecha_actualizacion|date:"d/m/Y" }}</td>
+                <td>
+                    <a href="{{ row.url }}" target="_blank">
+                        Ver anuncio
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+        {% else %}
+            <p>No se encontraron inmuebles con precio inferior o igual a {{ precio_max }}€</p>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

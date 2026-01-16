@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block encabezado %}
+    <h1>Anuncios actualizados el día de hoy</h1>
+{% endblock %}
+{% block contenido %}
+<div class="container mt-4">
+    <div style="background-color:#fff3cd; border:1px solid #ffc107; border-radius:4px; padding:1rem; margin-bottom:1rem; display:flex; justify-content:space-between; align-items:center;">
+        <strong>⚠️ Advertencia:</strong> Para ver los anuncios de hoy, debes haber cargado la base de datos el mismo día que realizas esta búsqueda. Si cargas la BD en un día diferente, no verás resultados.
+        <button id="btnContinuar" style="padding:0.5rem 1rem; background-color:#ffc107; border:none; border-radius:4px; cursor:pointer; font-weight:600;">Continuar</button>
+    </div>
+    
+    <div id="tablaPisos" style="display:none;">
+        <h2>Número total de inmuebles: {{ inmuebles|length }}</h2>
+        <table border="1" cellpadding="6" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Referencia</th>
+                    <th>Título</th>
+                    <th>Habitaciones</th>
+                    <th>Baños</th>
+                    <th>Precio (€)</th>
+                    <th>Planta</th>
+                    <th>Ubicación</th>
+                    <th>Antigüedad</th>
+                    <th>Inmobiliaria</th>
+                    <th>Fecha de actualización</th>
+                    <th>Enlace</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in inmuebles %}
+                <tr>
+                    <td>{{ row.referencia }}</td>
+                    <td>{{ row.titulo }}</td>
+                    <td>{{ row.habitaciones|default:"No hay información al respecto" }}</td>
+                    <td>{{ row.banos|default:"No hay información al respecto" }}</td>
+                    <td>{{ row.precio }}</td>
+                    <td>{{ row.planta }}</td>
+                    <td>{{ row.ubicacion }}</td>
+                    <td>{{ row.antiguedad }}</td>
+                    <td>
+                        <a href="{{ row.inmobiliaria.link }}">
+                            {{ row.inmobiliaria.nombre|default:"No hay información al respecto" }}
+                        </a>
+                    </td>
+                    <td>{{ row.fecha_actualizacion|date:"d/m/Y" }}</td>
+                    <td>
+                        <a href="{{ row.url }}" target="_blank">
+                            Ver anuncio
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        document.getElementById('btnContinuar').addEventListener('click', function() {
+            const tabla = document.getElementById('tablaPisos');
+            if (tabla.style.display === 'none') {
+                tabla.style.display = 'block';
+                this.textContent = 'Ocultar';
+            } else {
+                tabla.style.display = 'none';
+                this.textContent = 'Continuar';
+            }
+        });
+    </script>
+</div>
+{% endblock %}
