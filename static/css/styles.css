@@ -1,0 +1,270 @@
+/* ====== Base ====== */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: #f4f6f8;
+	color: #1f2937;
+	line-height: 1.5;
+	padding: 1rem 2rem 2rem;
+}
+
+h1,
+h2,
+h3 {
+	margin: 0.6rem 0;
+	color: #111827;
+}
+
+p {
+	margin: 0.5rem 0;
+}
+
+section {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 1rem;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* ====== Header / brand ====== */
+.brand {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 0.8rem 1rem;
+}
+
+.brand .autor {
+	color: #374151;
+}
+
+.logo-proyecto {
+	border-radius: 6px;
+	transition: transform 0.2s ease;
+}
+
+.logo-proyecto:hover {
+	transform: scale(1.03);
+}
+
+/* ====== Navegación ====== */
+nav {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1rem;
+	margin: 1rem 0;
+}
+
+.menu {
+	background: #ffffff;
+	border: 1px solid #dbe1e8;
+	border-radius: 10px;
+	padding: 1rem;
+}
+
+.menu h3 {
+	margin-top: 0;
+	margin-bottom: 0.8rem;
+}
+
+.menu ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.menu li {
+	margin: 0.35rem 0;
+}
+
+.menu a {
+	color: #1e40af;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.menu a:hover {
+	text-decoration: underline;
+}
+
+/* ====== Formularios ====== */
+form {
+	background: #ffffff;
+	border: 1px solid #e5e7eb;
+	border-radius: 10px;
+	padding: 1rem;
+	margin: 1rem 0;
+}
+
+label {
+	display: block;
+	margin: 0.45rem 0 0.25rem;
+	font-weight: 600;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+	width: min(420px, 100%);
+	padding: 0.55rem 0.65rem;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	outline: none;
+	background: #ffffff;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+	border-color: #2563eb;
+	box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+button,
+input[type="submit"],
+.btn,
+#btnContinuar {
+	border: none;
+	border-radius: 8px;
+	padding: 0.55rem 0.95rem;
+	cursor: pointer;
+	font-weight: 600;
+	background: #2563eb;
+	color: #ffffff;
+	transition: filter 0.2s ease, transform 0.1s ease;
+	margin-top: 0.6rem;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.btn:hover,
+#btnContinuar:hover {
+	filter: brightness(1.07);
+}
+
+button:active,
+input[type="submit"]:active,
+.btn:active,
+#btnContinuar:active {
+	transform: translateY(1px);
+}
+
+/* ====== Contenedores y alertas ====== */
+.container {
+	width: 100%;
+}
+
+.mt-2 {
+	margin-top: 0.5rem;
+}
+
+.mt-4 {
+	margin-top: 1rem;
+}
+
+.alert {
+	border-radius: 8px;
+	padding: 0.8rem 1rem;
+	border: 1px solid transparent;
+}
+
+.alert-info {
+	background: #e0f2fe;
+	border-color: #7dd3fc;
+	color: #0c4a6e;
+}
+
+.alert-danger {
+	background: #fee2e2;
+	border-color: #fca5a5;
+	color: #7f1d1d;
+}
+
+/* ====== Tablas ====== */
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 1rem 0;
+	background: #ffffff;
+	border: 1px solid #d1d5db;
+}
+
+thead {
+	background: #f3f4f6;
+}
+
+th,
+td {
+	border: 1px solid #d1d5db;
+	padding: 0.55rem 0.6rem;
+	text-align: left;
+	vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+	background: #f9fafb;
+}
+
+tbody tr:hover {
+	background: #eef2ff;
+}
+
+td a,
+p a {
+	color: #1d4ed8;
+	text-decoration: none;
+}
+
+td a:hover,
+p a:hover {
+	text-decoration: underline;
+}
+
+/* ====== Utilidades tipo bootstrap usadas en templates ====== */
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.col-md-6 {
+	flex: 1 1 320px;
+}
+
+.form-group {
+	margin-bottom: 0.75rem;
+}
+
+.form-control {
+	width: 100%;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+	body {
+		padding: 0.7rem;
+	}
+
+	section,
+	form,
+	.menu,
+	.brand {
+		padding: 0.8rem;
+	}
+
+	th,
+	td {
+		font-size: 0.9rem;
+		padding: 0.45rem;
+	}
+}
