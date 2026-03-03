@@ -38,10 +38,15 @@ section {
 
 /* ====== Header / brand ====== */
 .brand {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-top: 0.75rem;
 	background: #ffffff;
 	border: 1px solid #e5e7eb;
 	border-radius: 10px;
 	padding: 0.8rem 1rem;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .brand .autor {
@@ -67,14 +72,17 @@ nav {
 
 .menu {
 	background: #ffffff;
-	border: 1px solid #dbe1e8;
+	border: 1px solid #d6deea;
 	border-radius: 10px;
 	padding: 1rem;
+	box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
 }
 
 .menu h3 {
 	margin-top: 0;
-	margin-bottom: 0.8rem;
+	margin-bottom: 0.9rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid #e5e7eb;
 }
 
 .menu ul {
@@ -84,17 +92,23 @@ nav {
 }
 
 .menu li {
-	margin: 0.35rem 0;
+	margin: 0.25rem 0;
 }
 
 .menu a {
+	display: block;
+	padding: 0.4rem 0.55rem;
+	border-radius: 8px;
 	color: #1e40af;
 	text-decoration: none;
 	font-weight: 500;
+	transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .menu a:hover {
-	text-decoration: underline;
+	background-color: #eef2ff;
+	color: #1e3a8a;
+	text-decoration: none;
 }
 
 /* ====== Formularios ====== */
