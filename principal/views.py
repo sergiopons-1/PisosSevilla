@@ -4,6 +4,7 @@ from principal.populateDB import extraer_pisos
 from principal.whoosh.whoosh_trabajo import almacenar_bd_whoosh
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.core.paginator import Paginator
 from datetime import timedelta
 from whoosh.index import open_dir
 from whoosh.writing import AsyncWriter
@@ -19,9 +20,18 @@ def inicio(request):
     return render(request,'inicio.html', {'num_inmuebles':num_inmuebles, 'num_inmobiliarias': num_inmobiliarias})
 
 def listar_inmuebles(request):
-    inmuebles=Inmueble.objects.all()
-    num_inmuebles=Inmueble.objects.all().count()
-    return render(request,'inmuebles.html', {'inmuebles':inmuebles, 'num_inmuebles':num_inmuebles})
+    inmuebles = Inmueble.objects.all()
+    num_inmuebles = inmuebles.count()
+
+    paginator = Paginator(inmuebles, 50)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'inmuebles.html', {
+        'inmuebles': page_obj,
+        'num_inmuebles': num_inmuebles,
+        'page_obj': page_obj,
+    })
 
 def listar_inmobiliarias(request):
     inmobiliarias=Inmobiliaria.objects.all()
@@ -29,9 +39,20 @@ def listar_inmobiliarias(request):
     return render(request,'mostrarinmobiliarias.html', {'inmobiliarias':inmobiliarias, 'num_inmobiliarias':num_inmobiliarias})
 
 def cargar_bd(request):
-    extraer_pisos()
-    num_inmuebles=Inmueble.objects.all().count()
-    return render(request,'inicio.html', {'num_inmuebles':num_inmuebles})
+    paginas = request.GET.get('num_pags', None)
+    if not paginas:
+        return render(request, 'cargaBD.html', {'mensaje': 'Selecciona cuántas páginas quieres cargar (entre 3 y 10).'})
+
+    try:
+        paginas_int = int(paginas)
+        if paginas_int < 3 or paginas_int > 10:
+            raise ValueError
+    except ValueError:
+        return render(request, 'cargaBD.html', {'mensaje': 'El número de páginas debe estar entre 3 y 10.'})
+
+    num_inmuebles, num_inmobiliarias = extraer_pisos(paginas_int)
+    mensaje = "Se han almacenado: " + str(num_inmuebles) + " inmuebles y " + str(num_inmobiliarias) + " inmobiliarias en la base de datos."
+    return render(request, 'cargaBD.html', {'mensaje': mensaje})
 
 def carga(request):
     if request.method=='POST':
