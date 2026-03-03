@@ -5,7 +5,7 @@ from datetime import datetime
 from django.utils import timezone
 
 
-def extraer_inmuebles():
+def extraer_inmuebles(pags):
     """
     titulo                       
     habitaciones                 
@@ -21,7 +21,7 @@ def extraer_inmuebles():
    """
     inmuebles = []
     inmobiliaria_set = set()
-    PAGINAS = 3
+    PAGINAS = pags
    
     for pagina in range(1, PAGINAS + 1):
         url1 = f"https://www.pisos.com/venta/pisos-sevilla_capital/"+str(pagina)+"/"
@@ -33,8 +33,10 @@ def extraer_inmuebles():
             detalles = inmueble.find("div", class_="ad-preview__info")
             titulo = detalles.find("a", class_="ad-preview__title").get_text(strip=True)
             antiguedad = "No hay información al respecto"
+            precio = None
             precio_a = detalles.find("span", class_="ad-preview__price").get_text(strip=True)
-            precio = re.sub(r"[^\d]", "", precio_a)
+            if precio_a:
+                precio = re.sub(r"[^\d]", "", precio_a)
             url_piso = "https://www.pisos.com" + detalles.find("a", class_="ad-preview__title")['href']
 
             f2 = urllib.request.urlopen(url_piso)
@@ -87,7 +89,7 @@ def extraer_inmuebles():
 
             inmuebles.append({
                 'titulo': titulo,
-                'precio': float(precio),
+                'precio': float(precio) if precio else None,
                 'url': url_piso,
                 'habitaciones': habitaciones,
                 'baños': baños,

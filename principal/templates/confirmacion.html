@@ -5,9 +5,19 @@
 {% endblock %}
 
   {% block contenido %}
-    <h3>AVISO: Este proceso es lento, borra la base de datos actual y requiere conexi&oacute;n a internet</h3>
-    <form id='formulario' method='post' action=''>{% csrf_token %}
-		<input type="submit" name="Aceptar" value="Aceptar">
-		<input type="submit" name="Cancelar" value="Cancelar">
-	</form>
+    <h3>AVISO: Este proceso es lento, borra la base de datos actual y requiere conexión a internet</h3>
+    <form id='formulario' method='get' action='/cargar_bd/'>
+        <label for="num_pags">Número de páginas a cargar (3 a 10):</label>
+        <select id="num_pags" name="num_pags" required>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <button type="submit">Cargar</button>
+    </form>
   {% endblock %}

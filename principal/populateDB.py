@@ -5,7 +5,7 @@ import re
 from datetime import datetime
 from django.utils import timezone
 from principal.beautifulSoup.beautifulSoup import extraer_inmuebles
-def extraer_pisos():
+def extraer_pisos(pags):
     """
     titulo                       
     habitaciones                 
@@ -19,11 +19,10 @@ def extraer_pisos():
     url                    
     inmobiliaria que realiza la venta      
    """
-def extraer_pisos():
     Inmueble.objects.all().delete()
     Inmobiliaria.objects.all().delete()
 
-    lista_inmuebles, inmobiliaria_set = extraer_inmuebles()
+    lista_inmuebles, inmobiliaria_set = extraer_inmuebles(pags)
     
     inmobiliaria_map = {}
     for (nombre_inm, link_inm) in inmobiliaria_set:
@@ -33,9 +32,19 @@ def extraer_pisos():
     for inmueble in lista_inmuebles:
         key = (inmueble['inmobiliaria'], inmueble['link_inmobiliaria'])
         inmobiliaria_obj = inmobiliaria_map.get(key)
+        precio = inmueble.get('precio')
+
+        if precio is None:
+            continue
+
+        try:
+            precio = float(precio)
+        except (TypeError, ValueError):
+            continue
+
         Inmueble.objects.create(
             titulo=inmueble['titulo'],
-            precio=float(inmueble['precio']),
+            precio=precio,
             url=inmueble['url'],
             habitaciones=inmueble['habitaciones'],
             banos=inmueble['baños'],
